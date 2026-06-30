@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ *
+ * Cristalli di Zucchero — global styles
+ * ------------------------------------------------------------------ */
+
+:root {
+  --cream: #f8f4ed;
+  --cioccolato: #3c2f2f;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Honour users who ask for less motion — turn off smooth scroll and
+   neutralise the ambient keyframe animations. GSAP timelines are guarded
+   separately via gsap.matchMedia(). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--cioccolato);
+  font-feature-settings: "ss01", "cv01", "liga";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Subtle warm noise so large cream fields never feel flat or digital. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Refined cream scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: #d9cbb6;
+  border-radius: 999px;
+  border: 3px solid var(--cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c77b52;
+}
+
+::selection {
+  background: #f4c95d;
+  color: #3c2f2f;
+}
+
+/* Always-visible, on-brand focus ring for keyboard users. */
+:focus-visible {
+  outline: 2px solid #c77b52;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@layer components {
+  /* Small uppercase eyebrow used above section headings */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-label text-terracotta;
+  }
+
+  /* Iridescent sugar shine that sweeps across a headline */
+  .sugar-text {
+    @apply relative bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      92deg,
+      #3c2f2f 0%,
+      #3c2f2f 40%,
+      #c77b52 50%,
+      #f4c95d 56%,
+      #3c2f2f 66%,
+      #3c2f2f 100%
+    );
+    background-size: 220% 100%;
+    background-position: 100% 0;
+  }
+
+  /* Frosted panna card */
+  .glass {
+    background: rgba(255, 253, 248, 0.66);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+
+  /* Primary, candy-glossy button */
+  .btn-primary {
+    /* `border-transparent` keeps the box height identical to .btn-ghost (which
+       carries a 1px border) so the two never disagree by a pixel side by side. */
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full
+           border border-transparent bg-cioccolato px-7 py-3.5 text-sm font-semibold text-cream
+           shadow-soft transition-transform duration-300 will-change-transform;
+  }
+  .btn-primary:hover {
+    @apply -translate-y-0.5;
+  }
+  .btn-primary::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      rgba(244, 201, 93, 0.55) 50%,
+      transparent 70%
+    );
+  }
+  .btn-primary:hover::after {
+    @apply opacity-100;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-cioccolato/20
+           bg-transparent px-7 py-3.5 text-sm font-semibold text-cioccolato
+           transition-colors duration-300 hover:border-cioccolato/50 hover:bg-cioccolato/5;
+  }
+}
+
+@layer utilities {
+  /* Layered text shadow that reads as "engraved in sugar" */
+  .text-engrave {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent);
+    mask-image: linear-gradient(to bottom, black 75%, transparent);
+  }
+
+  /* Hide content visually but keep it for screen readers */
+  .sr-only-custom {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* Cake-booking form fields (used in CustomCakes) */
+.cc-input {
+  width: 100%;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(60, 47, 47, 0.15);
+  background: #fffdf8;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  color: #3c2f2f;
+  transition: border-color 0.2s;
+}
+.cc-input:focus {
+  outline: none;
+  border-color: #c77b52;
+}
+.cc-input::placeholder {
+  color: rgba(107, 90, 83, 0.5);
+}
+
+/* Reusable layout rail */
+.container-rail {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .container-rail {
+    padding-inline: 2.5rem;
+  }
+}
