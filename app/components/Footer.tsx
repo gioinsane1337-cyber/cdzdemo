@@ -128,7 +128,7 @@ export default function Footer() {
       {/* Legal */}
       <div className="border-t border-cream/10">
         <div className="container-rail flex flex-col items-center justify-between gap-2 py-6 text-xs text-cream/50 sm:flex-row">
-          <p>© {new Date().getFullYear()} Cristalli di Zucchero · P.IVA 00000000000</p>
+          <p>© {new Date().getFullYear()} Cristalli di Zucchero · P.IVA 08953470724</p>
           <p className="flex gap-4">
             <a href="#" className="hover:text-cream">Privacy</a>
             <a href="#" className="hover:text-cream">Cookie</a>

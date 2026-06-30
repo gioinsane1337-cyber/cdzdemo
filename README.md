@@ -120,7 +120,7 @@ and JSON-LD geo-coordinates are the shop's **real** details. Still verify/replac
 - **Phone** in `site.ts` — public listings show both a landline
   (`+39 080 891 6250`) and a mobile (`+39 331 331 3093`); the WhatsApp link uses the mobile.
 - **Email** (`info@cristallidizuccheroturi.it`) and the **Instagram** URL in `site.ts` are placeholders.
-- **P.IVA** `00000000000` in `Footer.tsx`.
+- **P.IVA** in `Footer.tsx` — set to the shop's real number (`08953470724`); verify it's correct.
 - **`siteUrl`** in `app/layout.tsx` — set the real domain so canonical/OG URLs resolve.
 
 ### 🏷️ Favicon & social image (generated — no manual files needed)
