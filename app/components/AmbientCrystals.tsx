@@ -33,10 +33,14 @@ const sparkles = [
 export default function AmbientCrystals() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Each crystal/sparkle is an infinitely-animating, layer-promoted element
+          with a drop-shadow filter. Phones only render the first few (the rest
+          are hidden below `sm`) so small devices carry roughly half the
+          continuous compositing work; desktops keep the full ambient field. */}
       {crystals.map((c, i) => (
         <div
           key={`c-${i}`}
-          className="absolute animate-float-crystal will-change-transform"
+          className={`absolute animate-float-crystal will-change-transform${i >= 4 ? " hidden sm:block" : ""}`}
           style={{
             left: c.left,
             top: c.top,
@@ -51,7 +55,7 @@ export default function AmbientCrystals() {
       {sparkles.map((s, i) => (
         <div
           key={`s-${i}`}
-          className="absolute animate-sparkle will-change-transform"
+          className={`absolute animate-sparkle will-change-transform${i >= 2 ? " hidden sm:block" : ""}`}
           style={{
             left: s.left,
             top: s.top,

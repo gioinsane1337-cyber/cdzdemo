@@ -38,7 +38,12 @@ body {
   color: var(--cioccolato);
   font-feature-settings: "ss01", "cv01", "liga";
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  /* `optimizeLegibility` forces kerning/ligature computation over ALL text and
+     is a well-known scroll/layout jank source on phones. `auto` lets the browser
+     keep kerning on the few large headings while staying fast on body text, and
+     the `liga` feature above is still honoured. */
+  text-rendering: auto;
+  -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
 }
 
@@ -50,7 +55,9 @@ body::before {
   z-index: 1;
   pointer-events: none;
   opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  /* numOctaves trimmed 3 -> 2: a cheaper one-time turbulence rasterisation at
+     first paint, visually indistinguishable at this 3.5% tile opacity. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
 /* Refined cream scrollbar */
@@ -103,11 +110,14 @@ body::before {
     background-position: 100% 0;
   }
 
-  /* Frosted panna card */
+  /* Frosted panna card. The backdrop-filter recomputes every frame the nav is
+     on screen during scroll, so the blur radius is kept modest (10px) — the
+     single biggest scroll-time cost on phones — while a slightly more opaque
+     panna background preserves the frosted look. */
   .glass {
-    background: rgba(255, 253, 248, 0.66);
-    backdrop-filter: blur(14px) saturate(1.1);
-    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    background: rgba(255, 253, 248, 0.72);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
     border: 1px solid rgba(255, 255, 255, 0.6);
   }
 

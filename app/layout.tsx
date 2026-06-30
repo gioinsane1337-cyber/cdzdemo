@@ -6,7 +6,10 @@ import "./globals.css";
 /* Display face — refined Italian serif with real personality in the italics. */
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
+  // Only the weights the UI actually uses (headings: 500/600/700, plus 400 for
+  // the italic sugar-text). 800/900 were declared but never referenced — every
+  // unused weight is an extra font file the phone downloads and parses on load.
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
@@ -15,7 +18,8 @@ const playfair = Playfair_Display({
 /* Body face — quiet, modern, highly legible. */
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  // 300 (light) was declared but never used — dropped to shave a font file.
+  weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
   display: "swap",
 });
